@@ -9,9 +9,9 @@ import {
   RemoveDebt,
   Transfer
 } from "../generated/Contract/Contract"
-import { ExampleEntity } from "../generated/schema"
+import { GETHTransfer } from "../generated/schema"
 
-export function handleAddDebt(event: AddDebt): void {
+/* export function handleAddDebt(event: AddDebt): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   let entity = ExampleEntity.load(event.transaction.from.toHex())
@@ -75,16 +75,24 @@ export function handleAddDebt(event: AddDebt): void {
   // - contract.debtValToShare(...)
   // - contract.positionInfo(...)
   // - contract.totalETH(...)
+} */
+
+export function handleAlohomora(event: Alohomora): void { }
+
+export function handleApproval(event: Approval): void { }
+
+export function handleKedavra(event: Kedavra): void { }
+
+export function handleOwnershipTransferred(event: OwnershipTransferred): void { }
+
+export function handleRemoveDebt(event: RemoveDebt): void { }
+
+export function handleTransfer(event: Transfer): void {
+  let transactionHash = event.transaction.hash.toHexString()
+  let transfer = new GETHTransfer(transactionHash)
+
+  transfer.from = event.params.from
+  transfer.to = event.params.to
+  transfer.value = event.params.value
+  transfer.save()
 }
-
-export function handleAlohomora(event: Alohomora): void {}
-
-export function handleApproval(event: Approval): void {}
-
-export function handleKedavra(event: Kedavra): void {}
-
-export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
-
-export function handleRemoveDebt(event: RemoveDebt): void {}
-
-export function handleTransfer(event: Transfer): void {}
